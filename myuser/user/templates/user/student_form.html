@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h2>Student Form</h2>
+
+  <form method="post" id="studentForm" data-branches-url="{% url 'ajax_load_branches' %}" novalidate>
+    {% csrf_token %}
+    <table>
+      
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+    <a href="{% url 'student_changelist' %}">Nevermind</a>
+  </form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+    $("#id_college").change(function () {
+      var url = $("#studentForm").attr("data-branches-url");  
+      var collegeId = $(this).val();  
+
+      $.ajax({                      
+        url: url,                    
+        data: {
+          'college': collegeId       
+        },
+        success: function (data) {  
+          $("#id_branch").html(data);  
+        }
+      });
+
+    });
+  </script>
+
+
+{% endblock %}

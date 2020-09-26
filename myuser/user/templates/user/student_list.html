@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Human Resources Module{% endblock %}
+
+{% block content %}
+  <h2>Human Resources Module » People Management</h2>
+
+  <p>
+    <a href="{% url 'student_add' %}">Add Student</a>
+  </p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Birthdate</th>
+        <th>College</th>
+        <th>Branch</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+        <tr>
+          <td><a href="{% url 'student_change' student.pk %}">{{ student.name }}</a></td>
+          <td>{{ student.birthdate }}</td>
+          <td>{{ student.college.name }}</td>
+          <td>{{ student.branch.name }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">No person in the database. <a href="{% url 'student_add' %}">Add the first person</a>.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
